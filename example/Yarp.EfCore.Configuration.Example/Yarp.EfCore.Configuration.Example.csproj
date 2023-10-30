@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Yarp.EfCore.Configuration.PostgreSql\Yarp.EfCore.Configuration.PostgreSql.csproj" />
+      <ProjectReference Include="..\..\src\Yarp.EfCore.Configuration\Yarp.EfCore.Configuration.csproj" />
+    </ItemGroup>
+
+</Project>

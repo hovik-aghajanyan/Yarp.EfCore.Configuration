@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yarp.EfCore.Configuration", "src\Yarp.EfCore.Configuration\Yarp.EfCore.Configuration.csproj", "{8F41A758-4192-46B6-AF39-E09BCFEEBB3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yarp.EfCore.Configuration.Example", "example\Yarp.EfCore.Configuration.Example\Yarp.EfCore.Configuration.Example.csproj", "{BC8C3BEB-0840-4F66-B222-384B67A0267A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yarp.EfCore.Configuration.PostgreSql", "src\Yarp.EfCore.Configuration.PostgreSql\Yarp.EfCore.Configuration.PostgreSql.csproj", "{F07334F5-08FA-497D-9ABF-8F11FFF4D94C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yarp.EfCore.Configuration.MsSql", "src\Yarp.EfCore.Configuration.MsSql\Yarp.EfCore.Configuration.MsSql.csproj", "{590B4F04-39A7-47CD-BEC8-FC3191385F47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{FCF9CC72-F7C5-4D02-8A02-C9B5582F49C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F41A758-4192-46B6-AF39-E09BCFEEBB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F41A758-4192-46B6-AF39-E09BCFEEBB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F41A758-4192-46B6-AF39-E09BCFEEBB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F41A758-4192-46B6-AF39-E09BCFEEBB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC8C3BEB-0840-4F66-B222-384B67A0267A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC8C3BEB-0840-4F66-B222-384B67A0267A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC8C3BEB-0840-4F66-B222-384B67A0267A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC8C3BEB-0840-4F66-B222-384B67A0267A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07334F5-08FA-497D-9ABF-8F11FFF4D94C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07334F5-08FA-497D-9ABF-8F11FFF4D94C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07334F5-08FA-497D-9ABF-8F11FFF4D94C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07334F5-08FA-497D-9ABF-8F11FFF4D94C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590B4F04-39A7-47CD-BEC8-FC3191385F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590B4F04-39A7-47CD-BEC8-FC3191385F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590B4F04-39A7-47CD-BEC8-FC3191385F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590B4F04-39A7-47CD-BEC8-FC3191385F47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC8C3BEB-0840-4F66-B222-384B67A0267A} = {FCF9CC72-F7C5-4D02-8A02-C9B5582F49C5}
+	EndGlobalSection
+EndGlobal
