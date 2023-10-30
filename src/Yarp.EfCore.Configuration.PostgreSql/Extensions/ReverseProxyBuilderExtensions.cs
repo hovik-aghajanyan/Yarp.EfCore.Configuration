@@ -5,7 +5,7 @@ namespace Yarp.EfCore.Configuration;
 
 public static class ReverseProxyBuilderExtensions
 {
-    public static IReverseProxyBuilder LoadFromPostgreSql(this IReverseProxyBuilder builder)
+    public static IReverseProxyBuilder LoadFromPostgreSql(this IReverseProxyBuilder builder, Action<dynamic> unknown)
     {
         
         return builder;
