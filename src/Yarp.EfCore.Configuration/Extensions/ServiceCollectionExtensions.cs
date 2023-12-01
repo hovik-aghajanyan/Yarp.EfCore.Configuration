@@ -8,7 +8,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddUpdateService(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(ServiceCollectionExtensions));
+        services.AddAutoMapper(o => {  },new[] {typeof(ServiceCollectionExtensions)},ServiceLifetime.Singleton );
         services.AddSingleton<EfCoreConfigurationProvider>();
         services.AddSingleton<UpdateCheckService>();
         services.AddHostedService<UpdateCheckService>();

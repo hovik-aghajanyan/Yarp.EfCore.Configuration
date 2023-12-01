@@ -1,6 +1,6 @@
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class ActiveHealthCheckConfigEntity
+public class ActiveHealthCheckConfigEntity:BaseEntity
 {
     /// <summary>Whether active health checks are enabled.</summary>
     public bool? Enabled { get; init; }

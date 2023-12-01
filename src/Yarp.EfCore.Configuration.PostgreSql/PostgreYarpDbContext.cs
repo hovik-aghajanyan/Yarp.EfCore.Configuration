@@ -4,7 +4,7 @@ namespace Yarp.EfCore.Configuration.PostgreSql;
 
 public class PostgreYarpDbContext:YarpDbContext
 {
-    public PostgreYarpDbContext(DbContextOptions<YarpDbContext> options) : base(options)
+    public PostgreYarpDbContext(DbContextOptions<PostgreYarpDbContext> options) : base(options)
     {
     }
 }

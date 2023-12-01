@@ -2,7 +2,7 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class HealthCheckConfigEntity
+public class HealthCheckConfigEntity:BaseEntity
 {
     /// <summary>Passive health check config.</summary>
     public PassiveHealthCheckConfigEntity? Passive { get; init; }

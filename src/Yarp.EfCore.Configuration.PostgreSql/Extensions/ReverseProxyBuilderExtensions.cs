@@ -14,7 +14,7 @@ public static class ReverseProxyBuilderExtensions
     {
         var config = new PostgreSqlConfig();
         options(config);
-        builder.Services.AddSingleton<BaseProviderConfig, PostgreSqlConfig>();
+        builder.Services.AddSingleton<BaseProviderConfig>(config);
         builder.Services.AddDbContext<YarpDbContext, PostgreYarpDbContext>(o =>
         {
             o.UseNpgsql(config.ConnectionString, optionsBuilder =>
@@ -23,7 +23,7 @@ public static class ReverseProxyBuilderExtensions
                 optionsBuilder.MigrationsAssembly(typeof(PostgreYarpDbContext).Assembly.FullName);
             });
         }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-        builder.Services.AddUpdateService();
+        //builder.Services.AddUpdateService();
         return builder;
     }
 }

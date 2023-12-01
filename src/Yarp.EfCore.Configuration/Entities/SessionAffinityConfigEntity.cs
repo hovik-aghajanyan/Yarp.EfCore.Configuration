@@ -2,7 +2,7 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class SessionAffinityConfigEntity
+public class SessionAffinityConfigEntity:BaseEntity
 {
     /// <summary>Indicates whether session affinity is enabled.</summary>
     public bool? Enabled { get; init; }

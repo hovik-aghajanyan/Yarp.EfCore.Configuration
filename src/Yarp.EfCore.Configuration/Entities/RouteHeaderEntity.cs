@@ -2,7 +2,7 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class RouteHeaderEntity
+public class RouteHeaderEntity:BaseEntity
 {
     /// <summary>
     /// Name of the header to look for.

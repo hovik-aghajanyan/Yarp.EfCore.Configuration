@@ -2,7 +2,7 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class HttpClientConfigEntity
+public class HttpClientConfigEntity:BaseEntity
 {
     /// <summary>What TLS protocols to use.</summary>
     public System.Security.Authentication.SslProtocols? SslProtocols { get; init; }

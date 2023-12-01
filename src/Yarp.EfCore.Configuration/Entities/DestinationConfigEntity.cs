@@ -1,6 +1,6 @@
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class DestinationConfigEntity
+public class DestinationConfigEntity:BaseEntity
 {
     /// <summary>
     /// Address of this destination. E.g. <c>https://127.0.0.1:123/abcd1234/</c>.
@@ -16,5 +16,5 @@ public class DestinationConfigEntity
     /// <summary>
     /// Arbitrary key-value pairs that further describe this destination.
     /// </summary>
-    public IReadOnlyDictionary<string, string>? Metadata { get; init; }
+    public DestinationConfigMetadataEntity? Metadata { get; init; }
 }

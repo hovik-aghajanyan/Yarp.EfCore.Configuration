@@ -2,7 +2,7 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class RouteQueryParameterEntity
+public class RouteQueryParameterEntity:BaseEntity
 {
     /// <summary>
     /// Name of the query parameter to look for.

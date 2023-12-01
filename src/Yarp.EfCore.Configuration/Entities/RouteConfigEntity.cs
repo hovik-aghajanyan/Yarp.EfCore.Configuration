@@ -2,7 +2,7 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class RouteConfigEntity
+public class RouteConfigEntity:BaseEntity
 {
     /// <summary>
     /// Globally unique identifier of the route.
@@ -54,12 +54,12 @@ public class RouteConfigEntity
     /// <summary>
     /// Arbitrary key-value pairs that further describe this route.
     /// </summary>
-    public IReadOnlyDictionary<string, string>? Metadata { get; init; }
+    public ICollection<RouteConfigMetadataEntity>? Metadata { get; init; }
 
     /// <summary>
     /// Parameters used to transform the request and response. See <see cref="T:Yarp.ReverseProxy.Transforms.Builder.ITransformBuilder" />.
     /// </summary>
-    public IReadOnlyList<IReadOnlyDictionary<string, string>>? Transforms { get; init; }
+    public ICollection<TransformEntity>? Transforms { get; init; }
 
     public bool IsEnabled { get; set; }
 }

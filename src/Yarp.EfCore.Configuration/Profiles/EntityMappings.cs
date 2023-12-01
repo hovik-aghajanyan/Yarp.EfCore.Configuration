@@ -11,6 +11,19 @@ public class EntityMappings:Profile
     {
         CreateMap<ActiveHealthCheckConfigEntity, ActiveHealthCheckConfig>().ReverseMap();
         CreateMap<ClusterConfigEntity, ClusterConfig>().ReverseMap();
+        
+        CreateMap<ClusterConfigDestinationEntity, IReadOnlyDictionary<string,DestinationConfig>>().ReverseMap();
+        CreateMap<ClusterConfigMetadataEntity, IReadOnlyDictionary<string,string>>()
+            .ReverseMap();
+        CreateMap<DestinationConfigMetadataEntity, IReadOnlyDictionary<string,string>>()
+            .ReverseMap();
+        CreateMap<RouteConfigMetadataEntity, IReadOnlyDictionary<string,string>>()
+            .ReverseMap();
+        CreateMap<TransformConfigEntity, IReadOnlyDictionary<string,string>>()
+            .ReverseMap();
+        CreateMap<TransformEntity, IReadOnlyList<IReadOnlyDictionary<string,string>>>()
+            .ReverseMap();
+        
         CreateMap<DestinationConfigEntity, DestinationConfig>().ReverseMap();
         CreateMap<ForwarderRequestConfigEntity, ForwarderRequestConfig>().ReverseMap();
         CreateMap<HealthCheckConfigEntity, HealthCheckConfig>().ReverseMap();

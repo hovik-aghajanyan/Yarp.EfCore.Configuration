@@ -3,7 +3,7 @@ using Yarp.ReverseProxy.Forwarder;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class ClusterConfigEntity
+public class ClusterConfigEntity:BaseEntity
 {
     /// <summary>
     /// The Id for this cluster. This needs to be globally unique.
@@ -29,10 +29,10 @@ public class ClusterConfigEntity
     public ForwarderRequestConfigEntity? HttpRequest { get; init; }
 
     /// <summary>The set of destinations associated with this cluster.</summary>
-    public IReadOnlyDictionary<string, DestinationConfigEntity>? Destinations { get; init; }
+    public ICollection<ClusterConfigDestinationEntity>? Destinations { get; init; }
 
     /// <summary>
     /// Arbitrary key-value pairs that further describe this cluster.
     /// </summary>
-    public IReadOnlyDictionary<string, string>? Metadata { get; init; }
+    public ICollection<ClusterConfigMetadataEntity>? Metadata { get; init; }
 }

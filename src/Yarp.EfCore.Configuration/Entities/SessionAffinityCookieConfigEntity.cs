@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class SessionAffinityCookieConfigEntity
+public class SessionAffinityCookieConfigEntity:BaseEntity
 {
     /// <summary>The cookie path.</summary>
     public string? Path { get; init; }

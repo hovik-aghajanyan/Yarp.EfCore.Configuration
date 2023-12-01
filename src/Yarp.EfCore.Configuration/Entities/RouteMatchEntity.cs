@@ -1,6 +1,6 @@
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class RouteMatchEntity
+public class RouteMatchEntity:BaseEntity
 {
     
     /// <summary>

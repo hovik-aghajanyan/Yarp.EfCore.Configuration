@@ -1,6 +1,6 @@
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class WebProxyConfigEntity
+public class WebProxyConfigEntity:BaseEntity
 {
     /// <summary>The URI of the proxy server.</summary>
     public Uri? Address { get; init; }

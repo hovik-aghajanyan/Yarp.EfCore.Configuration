@@ -1,6 +1,6 @@
 namespace Yarp.EfCore.Configuration.Entities;
 
-public class ForwarderRequestConfigEntity
+public class ForwarderRequestConfigEntity:BaseEntity
 {
 
     /// <summary>
