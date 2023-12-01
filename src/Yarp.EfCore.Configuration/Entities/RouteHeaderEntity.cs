@@ -14,7 +14,7 @@ public class RouteHeaderEntity:BaseEntity
     /// A collection of acceptable header values used during routing. Only one value must match.
     /// The list must not be empty unless using <see cref="F:Yarp.ReverseProxy.Configuration.HeaderMatchMode.Exists" /> or <see cref="F:Yarp.ReverseProxy.Configuration.HeaderMatchMode.NotExists" />.
     /// </summary>
-    public IReadOnlyList<string>? Values { get; init; }
+    public List<string>? Values { get; init; }
 
     /// <summary>
     /// Specifies how header values should be compared (e.g. exact matches Vs. by prefix).

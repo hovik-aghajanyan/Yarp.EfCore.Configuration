@@ -23,6 +23,8 @@ public class EntityMappings:Profile
             .ReverseMap();
         CreateMap<TransformEntity, IReadOnlyList<IReadOnlyDictionary<string,string>>>()
             .ReverseMap();
+        CreateMap<Version, string>()
+            .ReverseMap();
         
         CreateMap<DestinationConfigEntity, DestinationConfig>().ReverseMap();
         CreateMap<ForwarderRequestConfigEntity, ForwarderRequestConfig>().ReverseMap();

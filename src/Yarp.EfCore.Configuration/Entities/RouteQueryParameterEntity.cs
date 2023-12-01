@@ -13,7 +13,7 @@ public class RouteQueryParameterEntity:BaseEntity
     /// <summary>
     /// A collection of acceptable query parameter values used during routing.
     /// </summary>
-    public IReadOnlyList<string>? Values { get; init; }
+    public List<string>? Values { get; init; }
 
     /// <summary>
     /// Specifies how query parameter values should be compared (e.g. exact matches Vs. contains).

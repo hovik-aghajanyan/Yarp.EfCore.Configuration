@@ -15,7 +15,7 @@ public class ForwarderRequestConfigEntity:BaseEntity
     /// Preferred version of the outgoing request.
     /// The default is HTTP/2.0.
     /// </summary>
-    public Version? Version { get; init; }
+    public string? Version { get; init; }
 
     /// <summary>
     /// The policy applied to version selection, e.g. whether to prefer downgrades, upgrades or
