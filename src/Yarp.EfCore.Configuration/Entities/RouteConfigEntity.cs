@@ -60,4 +60,6 @@ public class RouteConfigEntity
     /// Parameters used to transform the request and response. See <see cref="T:Yarp.ReverseProxy.Transforms.Builder.ITransformBuilder" />.
     /// </summary>
     public IReadOnlyList<IReadOnlyDictionary<string, string>>? Transforms { get; init; }
+
+    public bool IsEnabled { get; set; }
 }

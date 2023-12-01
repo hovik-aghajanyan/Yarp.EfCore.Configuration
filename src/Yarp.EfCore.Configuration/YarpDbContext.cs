@@ -3,7 +3,7 @@ using Yarp.EfCore.Configuration.Entities;
 
 namespace Yarp.EfCore.Configuration;
 
-public class YarpDbContext:DbContext
+public class YarpDbContext(DbContextOptions<YarpDbContext> options) : DbContext(options)
 {
     public DbSet<ActiveHealthCheckConfigEntity> ActiveHealthCheckConfigs { get; set; } = null!;
     public DbSet<ClusterConfigEntity> ClusterConfigs { get; set; } = null!;
@@ -19,9 +19,4 @@ public class YarpDbContext:DbContext
     public DbSet<SessionAffinityConfigEntity> SessionAffinityConfigs { get; set; } = null!;
     public DbSet<SessionAffinityCookieConfigEntity> SessionAffinityCookieConfigs { get; set; } = null!;
     public DbSet<WebProxyConfigEntity> WebProxyConfigs { get; set; } = null!;
-    
-    
-    public YarpDbContext(DbContextOptions<YarpDbContext> options) : base(options)
-    {
-    }
 }
