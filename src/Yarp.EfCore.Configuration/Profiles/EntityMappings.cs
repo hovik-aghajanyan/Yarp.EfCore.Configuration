@@ -12,16 +12,21 @@ public class EntityMappings:Profile
         CreateMap<ActiveHealthCheckConfigEntity, ActiveHealthCheckConfig>().ReverseMap();
         CreateMap<ClusterConfigEntity, ClusterConfig>().ReverseMap();
         
-        CreateMap<ClusterConfigDestinationEntity, IReadOnlyDictionary<string,DestinationConfig>>().ReverseMap();
-        CreateMap<ClusterConfigMetadataEntity, IReadOnlyDictionary<string,string>>()
+        CreateMap<ClusterConfigDestinationEntity, KeyValuePair<string,DestinationConfig>>()
+            .ForMember(p => p.Key, opt => opt.MapFrom(p => p.Name))
+            .ForMember(p => p.Value, opt => opt.MapFrom(p => p.DestinationConfig))
+            .ReverseMap()
+            .ForMember(p => p.Name, opt => opt.MapFrom(p => p.Key))
+            .ForMember(p => p.DestinationConfig, opt => opt.MapFrom(p => p.Value));
+        CreateMap<ClusterConfigMetadataEntity, KeyValuePair<string, string>>()
             .ReverseMap();
-        CreateMap<DestinationConfigMetadataEntity, IReadOnlyDictionary<string,string>>()
+        CreateMap<DestinationConfigMetadataEntity, KeyValuePair<string, string>>()
             .ReverseMap();
-        CreateMap<RouteConfigMetadataEntity, IReadOnlyDictionary<string,string>>()
+        CreateMap<RouteConfigMetadataEntity, KeyValuePair<string, string>>()
             .ReverseMap();
-        CreateMap<TransformConfigEntity, IReadOnlyDictionary<string,string>>()
+        CreateMap<TransformConfigEntity, KeyValuePair<string, string>>()
             .ReverseMap();
-        CreateMap<TransformEntity, IReadOnlyList<IReadOnlyDictionary<string,string>>>()
+        CreateMap<TransformEntity, IReadOnlyDictionary<string,string>>()
             .ReverseMap();
         CreateMap<Version, string>()
             .ReverseMap();
