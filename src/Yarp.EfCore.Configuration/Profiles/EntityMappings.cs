@@ -27,6 +27,7 @@ public class EntityMappings:Profile
         CreateMap<TransformConfigEntity, KeyValuePair<string, string>>()
             .ReverseMap();
         CreateMap<TransformEntity, IReadOnlyDictionary<string,string>>()
+            //ToDo: Complete this mapping
             .ReverseMap();
         CreateMap<Version, string>()
             .ReverseMap();
