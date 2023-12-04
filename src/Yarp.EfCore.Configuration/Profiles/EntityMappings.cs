@@ -1,7 +1,7 @@
 using AutoMapper;
+using Yarp.EfCore.Configuration.Entities;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Forwarder;
-using Yarp.EfCore.Configuration.Entities;
 
 namespace Yarp.EfCore.Configuration.Profiles;
 
@@ -9,8 +9,8 @@ public class EntityMappings:Profile
 {
     public EntityMappings()
     {
-        CreateMap<ActiveHealthCheckConfigEntity, ActiveHealthCheckConfig>().ReverseMap();
-        CreateMap<ClusterConfigEntity, ClusterConfig>().ReverseMap();
+        CreateMap<ActiveHealthCheckConfigEntity, ActiveHealthCheckConfig>()
+            .ReverseMap();
         
         CreateMap<ClusterConfigDestinationEntity, KeyValuePair<string,DestinationConfig>>()
             .ForMember(p => p.Key, opt => opt.MapFrom(p => p.Name))
@@ -26,9 +26,6 @@ public class EntityMappings:Profile
             .ReverseMap();
         CreateMap<TransformConfigEntity, KeyValuePair<string, string>>()
             .ReverseMap();
-        CreateMap<TransformEntity, IReadOnlyDictionary<string,string>>()
-            //ToDo: Complete this mapping
-            .ReverseMap();
         CreateMap<Version, string>()
             .ReverseMap();
         
@@ -37,12 +34,17 @@ public class EntityMappings:Profile
         CreateMap<HealthCheckConfigEntity, HealthCheckConfig>().ReverseMap();
         CreateMap<HttpClientConfigEntity, HttpClientConfig>().ReverseMap();
         CreateMap<PassiveHealthCheckConfigEntity, PassiveHealthCheckConfig>().ReverseMap();
-        CreateMap<RouteConfigEntity, RouteConfig>().ReverseMap();
+        CreateMap<RouteConfigEntity, RouteConfig>()
+            .ForMember(p => p.Transforms, opt => opt.MapFrom(p => p.Transforms.Select(p => p.TransformConfigEntities).ToList()))
+            .ReverseMap()
+            ;
         CreateMap<RouteHeaderEntity, RouteHeader>().ReverseMap();
         CreateMap<RouteMatchEntity, RouteMatch>().ReverseMap();
         CreateMap<RouteQueryParameterEntity, RouteQueryParameter>().ReverseMap();
         CreateMap<SessionAffinityConfigEntity, SessionAffinityConfig>().ReverseMap();
         CreateMap<SessionAffinityCookieConfigEntity, SessionAffinityCookieConfig>().ReverseMap();
         CreateMap<WebProxyConfigEntity, WebProxyConfig>().ReverseMap();
+        CreateMap<ClusterConfigEntity, ClusterConfig>()
+            .ReverseMap();
     }
 }

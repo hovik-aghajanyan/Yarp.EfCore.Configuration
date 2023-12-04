@@ -1,5 +1,3 @@
-using Yarp.ReverseProxy.Configuration;
-
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class HttpClientConfigEntity:BaseEntity

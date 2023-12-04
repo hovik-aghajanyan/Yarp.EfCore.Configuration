@@ -14,7 +14,7 @@ public class RouteConfigEntity:BaseEntity
     /// Parameters used to match requests.
     /// This field is required.
     /// </summary>
-    public RouteMatch Match { get; init; } = null!;
+    public RouteMatchEntity Match { get; init; } = null!;
 
     /// <summary>
     /// Optionally, an order value for this route. Routes with lower numbers take precedence over higher numbers.
@@ -59,7 +59,7 @@ public class RouteConfigEntity:BaseEntity
     /// <summary>
     /// Parameters used to transform the request and response. See <see cref="T:Yarp.ReverseProxy.Transforms.Builder.ITransformBuilder" />.
     /// </summary>
-    public ICollection<TransformEntity>? Transforms { get; init; }
+    public ICollection<RouterConfigTransformConfigMappingEntity>? Transforms { get; init; }
 
     public bool IsEnabled { get; set; }
 }

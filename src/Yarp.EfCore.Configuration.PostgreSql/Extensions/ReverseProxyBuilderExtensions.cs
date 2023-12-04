@@ -23,7 +23,7 @@ public static class ReverseProxyBuilderExtensions
                 optionsBuilder.MigrationsAssembly(typeof(PostgreYarpDbContext).Assembly.FullName);
             });
         }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-        //builder.Services.AddUpdateService();
+        builder.Services.AddUpdateService();
         return builder;
     }
 }

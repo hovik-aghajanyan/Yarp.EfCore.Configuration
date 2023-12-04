@@ -1,6 +1,3 @@
-using Yarp.ReverseProxy.Configuration;
-using Yarp.ReverseProxy.Forwarder;
-
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class ClusterConfigEntity:BaseEntity
