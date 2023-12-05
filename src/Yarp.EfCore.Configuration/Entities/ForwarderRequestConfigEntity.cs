@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Forwarder;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class ForwarderRequestConfigEntity:BaseEntity
@@ -29,4 +31,15 @@ public class ForwarderRequestConfigEntity:BaseEntity
     /// NOTE: enabling it can break SSE (server side event) scenarios.
     /// </summary>
     public bool? AllowResponseBuffering { get; init; }
+
+    public ForwarderRequestConfig ToConfig()
+    {
+        return new ForwarderRequestConfig
+        {
+            Version = new Version(Version ?? "2.0"),
+            ActivityTimeout = ActivityTimeout,
+            VersionPolicy = VersionPolicy,
+            AllowResponseBuffering = AllowResponseBuffering
+        };
+    }
 }

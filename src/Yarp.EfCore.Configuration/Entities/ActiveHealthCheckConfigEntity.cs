@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class ActiveHealthCheckConfigEntity:BaseEntity
@@ -18,4 +20,16 @@ public class ActiveHealthCheckConfigEntity:BaseEntity
 
     /// <summary>HTTP health check endpoint path.</summary>
     public string? Path { get; init; }
+
+    public ActiveHealthCheckConfig ToConfig()
+    {
+        return new ActiveHealthCheckConfig
+        {
+            Enabled = Enabled,
+            Policy = Policy,
+            Interval = Interval,
+            Path = Path,
+            Timeout = Timeout
+        };
+    }
 }

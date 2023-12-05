@@ -18,7 +18,7 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<RouteConfigEntity> RouteConfigs { get; set; } = null!;
     public DbSet<RouteConfigMetadataEntity> RouteConfigMetadata { get; set; } = null!;
     public DbSet<TransformConfigEntity> TransformConfigs { get; set; } = null!;
-    public DbSet<RouterConfigTransformConfigMappingEntity> RouterConfigTransformConfigMappingEntities { get; set; } = null!;
+    public DbSet<TransformEntity> Transforms { get; set; } = null!;
     public DbSet<RouteHeaderEntity> RouteHeaders { get; set; } = null!;
     public DbSet<RouteMatchEntity> RouteMatches { get; set; } = null!;
     public DbSet<RouteQueryParameterEntity> RouteQueryParameters { get; set; } = null!;

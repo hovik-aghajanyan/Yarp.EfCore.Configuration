@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class ClusterConfigEntity:BaseEntity
@@ -32,4 +34,19 @@ public class ClusterConfigEntity:BaseEntity
     /// Arbitrary key-value pairs that further describe this cluster.
     /// </summary>
     public ICollection<ClusterConfigMetadataEntity>? Metadata { get; init; }
+
+    public ClusterConfig ToConfig()
+    {
+        return new ClusterConfig
+        {
+            ClusterId = ClusterId,
+            LoadBalancingPolicy = LoadBalancingPolicy,
+            Destinations = Destinations?.ToDictionary(d => d.Name, d => d.DestinationConfig.ToConfig()),
+            HealthCheck = HealthCheck?.ToConfig(),
+            HttpClient = HttpClient?.ToConfig(),
+            HttpRequest = HttpRequest?.ToConfig(),
+            Metadata = Metadata?.ToDictionary(m => m.Key, m => m.Value),
+            SessionAffinity = SessionAffinity?.ToConfig()
+        };
+    }
 }

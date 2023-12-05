@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class HealthCheckConfigEntity:BaseEntity
@@ -10,4 +12,14 @@ public class HealthCheckConfigEntity:BaseEntity
 
     /// <summary>Available destinations policy.</summary>
     public string? AvailableDestinationsPolicy { get; init; }
+
+    public HealthCheckConfig ToConfig()
+    {
+        return new HealthCheckConfig
+        {
+            AvailableDestinationsPolicy = AvailableDestinationsPolicy,
+            Passive = Passive?.ToConfig(),
+            Active = Active?.ToConfig()
+        };
+    }
 }

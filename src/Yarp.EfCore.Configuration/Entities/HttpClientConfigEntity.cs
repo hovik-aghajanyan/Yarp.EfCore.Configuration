@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class HttpClientConfigEntity:BaseEntity
@@ -26,10 +28,23 @@ public class HttpClientConfigEntity:BaseEntity
     /// be established to the same server when the maximum number of concurrent streams
     /// is reached on all existing connections.
     /// </summary>
-    public bool? EnableMultipleHttp2Connections { get; init; }
+    public bool? EnableMultipleHttp2Connections { get; set; }
 
     /// <summary>
     /// Enables non-ASCII header encoding for outgoing requests.
     /// </summary>
     public string? RequestHeaderEncoding { get; init; }
+
+    public HttpClientConfig ToConfig()
+    {
+        return HttpClientConfig.Empty with
+        {
+            DangerousAcceptAnyServerCertificate = DangerousAcceptAnyServerCertificate,
+            EnableMultipleHttp2Connections = EnableMultipleHttp2Connections,
+            MaxConnectionsPerServer = MaxConnectionsPerServer,
+            SslProtocols = SslProtocols,
+            WebProxy = WebProxy?.ToConfig(),
+            RequestHeaderEncoding = RequestHeaderEncoding
+        };
+    }
 }

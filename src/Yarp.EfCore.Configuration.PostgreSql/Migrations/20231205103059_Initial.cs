@@ -31,17 +31,18 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DestinationConfigMetadata",
+                name: "DestinationConfigs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false)
+                    Address = table.Column<string>(type: "text", nullable: false),
+                    Health = table.Column<string>(type: "text", nullable: true),
+                    Host = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DestinationConfigMetadata", x => x.Id);
+                    table.PrimaryKey("PK_DestinationConfigs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,22 +127,22 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DestinationConfigs",
+                name: "DestinationConfigMetadata",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Address = table.Column<string>(type: "text", nullable: false),
-                    Health = table.Column<string>(type: "text", nullable: true),
-                    MetadataId = table.Column<int>(type: "integer", nullable: true)
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    DestinationConfigEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DestinationConfigs", x => x.Id);
+                    table.PrimaryKey("PK_DestinationConfigMetadata", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DestinationConfigs_DestinationConfigMetadata_MetadataId",
-                        column: x => x.MetadataId,
-                        principalTable: "DestinationConfigMetadata",
+                        name: "FK_DestinationConfigMetadata_DestinationConfigs_DestinationCon~",
+                        column: x => x.DestinationConfigEntityId,
+                        principalTable: "DestinationConfigs",
                         principalColumn: "Id");
                 });
 
@@ -168,6 +169,35 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         column: x => x.PassiveId,
                         principalTable: "PassiveHealthCheckConfigs",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RouteConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RouteId = table.Column<string>(type: "text", nullable: false),
+                    MatchId = table.Column<int>(type: "integer", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: true),
+                    ClusterId = table.Column<string>(type: "text", nullable: true),
+                    AuthorizationPolicy = table.Column<string>(type: "text", nullable: true),
+                    CorsPolicy = table.Column<string>(type: "text", nullable: true),
+                    MaxRequestBodySize = table.Column<long>(type: "bigint", nullable: true),
+                    RateLimiterPolicy = table.Column<string>(type: "text", nullable: true),
+                    TimeoutPolicy = table.Column<string>(type: "text", nullable: true),
+                    Timeout = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    IsEnabled = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RouteConfigs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RouteConfigs_RouteMatches_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "RouteMatches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -260,6 +290,45 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RouteConfigMetadata",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    RouteConfigEntityId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RouteConfigMetadata", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RouteConfigMetadata_RouteConfigs_RouteConfigEntityId",
+                        column: x => x.RouteConfigEntityId,
+                        principalTable: "RouteConfigs",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transforms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RouteConfigId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transforms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transforms_RouteConfigs_RouteConfigId",
+                        column: x => x.RouteConfigId,
+                        principalTable: "RouteConfigs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ClusterConfigs",
                 columns: table => new
                 {
@@ -294,6 +363,26 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         name: "FK_ClusterConfigs_SessionAffinityConfigs_SessionAffinityId",
                         column: x => x.SessionAffinityId,
                         principalTable: "SessionAffinityConfigs",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransformConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    TransformEntityId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransformConfigs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TransformConfigs_Transforms_TransformEntityId",
+                        column: x => x.TransformEntityId,
+                        principalTable: "Transforms",
                         principalColumn: "Id");
                 });
 
@@ -344,97 +433,6 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "RouteConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RouteId = table.Column<string>(type: "text", nullable: false),
-                    MatchId = table.Column<int>(type: "integer", nullable: false),
-                    Order = table.Column<int>(type: "integer", nullable: true),
-                    ClusterId = table.Column<string>(type: "text", nullable: true),
-                    ClusterId1 = table.Column<int>(type: "integer", nullable: true),
-                    AuthorizationPolicy = table.Column<string>(type: "text", nullable: true),
-                    CorsPolicy = table.Column<string>(type: "text", nullable: true),
-                    MaxRequestBodySize = table.Column<long>(type: "bigint", nullable: true),
-                    IsEnabled = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RouteConfigs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RouteConfigs_ClusterConfigs_ClusterId1",
-                        column: x => x.ClusterId1,
-                        principalTable: "ClusterConfigs",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_RouteConfigs_RouteMatches_MatchId",
-                        column: x => x.MatchId,
-                        principalTable: "RouteMatches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RouteConfigMetadata",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    RouteConfigEntityId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RouteConfigMetadata", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RouteConfigMetadata_RouteConfigs_RouteConfigEntityId",
-                        column: x => x.RouteConfigEntityId,
-                        principalTable: "RouteConfigs",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RouterConfigTransformConfigMappingEntity",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RouteConfigEntityId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RouterConfigTransformConfigMappingEntity", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RouterConfigTransformConfigMappingEntity_RouteConfigs_Route~",
-                        column: x => x.RouteConfigEntityId,
-                        principalTable: "RouteConfigs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TransformConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    RouterConfigTransformConfigMappingEntityId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TransformConfigs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TransformConfigs_RouterConfigTransformConfigMappingEntity_R~",
-                        column: x => x.RouterConfigTransformConfigMappingEntityId,
-                        principalTable: "RouterConfigTransformConfigMappingEntity",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ClusterConfigs_HealthCheckId",
                 table: "ClusterConfigs",
@@ -471,9 +469,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 column: "ClusterConfigEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DestinationConfigs_MetadataId",
-                table: "DestinationConfigs",
-                column: "MetadataId");
+                name: "IX_DestinationConfigMetadata_DestinationConfigEntityId",
+                table: "DestinationConfigMetadata",
+                column: "DestinationConfigEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HealthCheckConfigs_ActiveId",
@@ -496,11 +494,6 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 column: "RouteConfigEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RouteConfigs_ClusterId1",
-                table: "RouteConfigs",
-                column: "ClusterId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RouteConfigs_MatchId",
                 table: "RouteConfigs",
                 column: "MatchId");
@@ -516,19 +509,19 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 column: "RouteMatchEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RouterConfigTransformConfigMappingEntity_RouteConfigEntityId",
-                table: "RouterConfigTransformConfigMappingEntity",
-                column: "RouteConfigEntityId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SessionAffinityConfigs_CookieId",
                 table: "SessionAffinityConfigs",
                 column: "CookieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransformConfigs_RouterConfigTransformConfigMappingEntityId",
+                name: "IX_TransformConfigs_TransformEntityId",
                 table: "TransformConfigs",
-                column: "RouterConfigTransformConfigMappingEntityId");
+                column: "TransformEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transforms_RouteConfigId",
+                table: "Transforms",
+                column: "RouteConfigId");
         }
 
         /// <inheritdoc />
@@ -539,6 +532,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
             migrationBuilder.DropTable(
                 name: "ClusterConfigsMetadata");
+
+            migrationBuilder.DropTable(
+                name: "DestinationConfigMetadata");
 
             migrationBuilder.DropTable(
                 name: "RouteConfigMetadata");
@@ -553,22 +549,13 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "TransformConfigs");
 
             migrationBuilder.DropTable(
-                name: "DestinationConfigs");
-
-            migrationBuilder.DropTable(
-                name: "RouterConfigTransformConfigMappingEntity");
-
-            migrationBuilder.DropTable(
-                name: "DestinationConfigMetadata");
-
-            migrationBuilder.DropTable(
-                name: "RouteConfigs");
-
-            migrationBuilder.DropTable(
                 name: "ClusterConfigs");
 
             migrationBuilder.DropTable(
-                name: "RouteMatches");
+                name: "DestinationConfigs");
+
+            migrationBuilder.DropTable(
+                name: "Transforms");
 
             migrationBuilder.DropTable(
                 name: "ForwarderRequestConfigs");
@@ -583,6 +570,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "SessionAffinityConfigs");
 
             migrationBuilder.DropTable(
+                name: "RouteConfigs");
+
+            migrationBuilder.DropTable(
                 name: "ActiveHealthCheckConfigs");
 
             migrationBuilder.DropTable(
@@ -593,6 +583,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
             migrationBuilder.DropTable(
                 name: "SessionAffinityCookieConfigs");
+
+            migrationBuilder.DropTable(
+                name: "RouteMatches");
         }
     }
 }

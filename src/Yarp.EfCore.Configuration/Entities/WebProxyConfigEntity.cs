@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class WebProxyConfigEntity:BaseEntity
@@ -16,4 +18,14 @@ public class WebProxyConfigEntity:BaseEntity
     /// If null, default value will be used: false
     /// </summary>
     public bool? UseDefaultCredentials { get; init; }
+
+    public WebProxyConfig ToConfig()
+    {
+        return new WebProxyConfig
+        {
+            Address = Address,
+            BypassOnLocal = BypassOnLocal,
+            UseDefaultCredentials = UseDefaultCredentials
+        };
+    }
 }

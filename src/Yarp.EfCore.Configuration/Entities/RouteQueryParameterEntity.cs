@@ -28,4 +28,15 @@ public class RouteQueryParameterEntity:BaseEntity
     /// Defaults to <c>false</c>.
     /// </summary>
     public bool IsCaseSensitive { get; init; }
+
+    public RouteQueryParameter ToConfig()
+    {
+        return new RouteQueryParameter
+        {
+            Mode = Mode,
+            IsCaseSensitive = IsCaseSensitive,
+            Name = Name,
+            Values = Values
+        };
+    }
 }

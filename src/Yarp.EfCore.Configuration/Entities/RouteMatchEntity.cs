@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class RouteMatchEntity:BaseEntity
@@ -26,4 +28,16 @@ public class RouteMatchEntity:BaseEntity
     /// Only match requests that contain all of these headers.
     /// </summary>
     public List<RouteHeaderEntity>? Headers { get; init; }
+
+    public RouteMatch ToConfig()
+    {
+        return new RouteMatch()
+        {
+            Path = Path,
+            Hosts = Hosts,
+            Methods = Methods,
+            Headers = Headers?.Select(x => x.ToConfig()).ToList(),
+            QueryParameters = QueryParameters?.Select(x => x.ToConfig()).ToList()
+        };
+    }
 }

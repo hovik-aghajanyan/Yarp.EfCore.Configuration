@@ -27,8 +27,6 @@ public class RouteConfigEntity:BaseEntity
     /// </summary>
     public string? ClusterId { get; init; }
 
-    public ClusterConfigEntity? Cluster { get; set; }
-
     /// <summary>
     /// The name of the AuthorizationPolicy to apply to this route.
     /// If not set then only the FallbackPolicy will apply.
@@ -59,7 +57,50 @@ public class RouteConfigEntity:BaseEntity
     /// <summary>
     /// Parameters used to transform the request and response. See <see cref="T:Yarp.ReverseProxy.Transforms.Builder.ITransformBuilder" />.
     /// </summary>
-    public ICollection<RouterConfigTransformConfigMappingEntity>? Transforms { get; init; }
+    public ICollection<TransformEntity>? Transforms { get; init; }
+    
+    /// <summary>
+    /// The name of the RateLimiterPolicy to apply to this route.
+    /// If not set then only the GlobalLimiter will apply.
+    /// Set to "Disable" to disable rate limiting for this route.
+    /// Set to "Default" or leave empty to use the global rate limits, if any.
+    /// </summary>
+    public string? RateLimiterPolicy { get; init; }
+
+    /// <summary>
+    /// The name of the TimeoutPolicy to apply to this route.
+    /// Setting both Timeout and TimeoutPolicy is an error.
+    /// If not set then only the system default will apply.
+    /// Set to "Disable" to disable timeouts for this route.
+    /// Set to "Default" or leave empty to use the system defaults, if any.
+    /// </summary>
+    public string? TimeoutPolicy { get; init; }
+
+    /// <summary>
+    /// The Timeout to apply to this route. This overrides any system defaults.
+    /// Setting both Timeout and TimeoutPolicy is an error.
+    /// Timeout granularity is limited to milliseconds.
+    /// </summary>
+    public TimeSpan? Timeout { get; init; }
 
     public bool IsEnabled { get; set; }
+
+    public RouteConfig ToConfig()
+    {
+        return new RouteConfig
+        {
+            Match = Match.ToConfig(),
+            Metadata = Metadata?.ToDictionary(m => m.Key, m => m.Value),
+            Order = Order,
+            ClusterId = ClusterId,
+            AuthorizationPolicy = AuthorizationPolicy,
+            CorsPolicy = CorsPolicy,
+            MaxRequestBodySize = MaxRequestBodySize,
+            Transforms = Transforms?.Select(t => t.TransformConfigs.ToDictionary(c => c.Key, c => c.Value)).ToList(),
+            RouteId = RouteId,
+            Timeout = Timeout,
+            TimeoutPolicy = TimeoutPolicy,
+            RateLimiterPolicy = RateLimiterPolicy
+        };
+    }
 }

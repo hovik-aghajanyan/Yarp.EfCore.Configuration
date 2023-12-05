@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class PassiveHealthCheckConfigEntity:BaseEntity
@@ -12,4 +14,14 @@ public class PassiveHealthCheckConfigEntity:BaseEntity
     /// Destination reactivation period after which an unhealthy destination is considered healthy again.
     /// </summary>
     public TimeSpan? ReactivationPeriod { get; init; }
+
+    public PassiveHealthCheckConfig ToConfig()
+    {
+        return new PassiveHealthCheckConfig()
+        {
+            ReactivationPeriod = ReactivationPeriod,
+            Enabled = Enabled,
+            Policy = Policy
+        };
+    }
 }

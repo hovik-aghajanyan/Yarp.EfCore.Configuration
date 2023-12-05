@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class DestinationConfigEntity:BaseEntity
@@ -16,5 +18,18 @@ public class DestinationConfigEntity:BaseEntity
     /// <summary>
     /// Arbitrary key-value pairs that further describe this destination.
     /// </summary>
-    public DestinationConfigMetadataEntity? Metadata { get; init; }
+    public ICollection<DestinationConfigMetadataEntity>? Metadata { get; init; }
+
+    public string? Host { get; set; }
+
+    public DestinationConfig ToConfig()
+    {
+        return new DestinationConfig
+        {
+            Address = Address,
+            Health = Health,
+            Metadata = Metadata?.ToDictionary(m => m.Key, m => m.Value),
+            Host = Host
+        };
+    }
 }

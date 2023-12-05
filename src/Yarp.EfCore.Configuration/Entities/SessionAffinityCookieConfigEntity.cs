@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
 
@@ -38,4 +39,19 @@ public class SessionAffinityCookieConfigEntity:BaseEntity
     /// </summary>
     /// <remarks>Defaults to "false".</remarks>
     public bool? IsEssential { get; init; }
+
+    public SessionAffinityCookieConfig ToConfig()
+    {
+        return new SessionAffinityCookieConfig
+        {
+            Domain = Domain,
+            Expiration = Expiration,
+            HttpOnly = HttpOnly,
+            IsEssential = IsEssential,
+            MaxAge = MaxAge,
+            Path = Path,
+            SameSite = SameSite,
+            SecurePolicy = SecurePolicy
+        };
+    }
 }

@@ -13,8 +13,8 @@ public class UpdateCheckService(EfCoreConfigurationProvider configurationProvide
     {
         while (!stoppingToken.IsCancellationRequested && _checkInterval is not null)
         {
-            configurationProvider.Update();
             await Task.Delay(_checkInterval.Value, stoppingToken);
+            configurationProvider.Update();
         }
     }
 }

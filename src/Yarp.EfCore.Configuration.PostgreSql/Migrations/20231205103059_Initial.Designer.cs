@@ -13,7 +13,7 @@ using Yarp.EfCore.Configuration.PostgreSql;
 namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgreYarpDbContext))]
-    [Migration("20231204072049_Initial")]
+    [Migration("20231205103059_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -162,12 +162,10 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.Property<string>("Health")
                         .HasColumnType("text");
 
-                    b.Property<int?>("MetadataId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Host")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MetadataId");
 
                     b.ToTable("DestinationConfigs");
                 });
@@ -180,6 +178,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("DestinationConfigEntityId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("text");
@@ -189,6 +190,8 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DestinationConfigEntityId");
 
                     b.ToTable("DestinationConfigMetadata");
                 });
@@ -313,9 +316,6 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.Property<string>("ClusterId")
                         .HasColumnType("text");
 
-                    b.Property<int?>("ClusterId1")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CorsPolicy")
                         .HasColumnType("text");
 
@@ -331,13 +331,20 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.Property<int?>("Order")
                         .HasColumnType("integer");
 
+                    b.Property<string>("RateLimiterPolicy")
+                        .HasColumnType("text");
+
                     b.Property<string>("RouteId")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.Property<TimeSpan?>("Timeout")
+                        .HasColumnType("interval");
 
-                    b.HasIndex("ClusterId1");
+                    b.Property<string>("TimeoutPolicy")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("MatchId");
 
@@ -454,24 +461,6 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.ToTable("RouteQueryParameters");
                 });
 
-            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouterConfigTransformConfigMappingEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("RouteConfigEntityId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RouteConfigEntityId");
-
-                    b.ToTable("RouterConfigTransformConfigMappingEntity");
-                });
-
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.SessionAffinityConfigEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -552,7 +541,7 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("RouterConfigTransformConfigMappingEntityId")
+                    b.Property<int?>("TransformEntityId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Value")
@@ -561,9 +550,27 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RouterConfigTransformConfigMappingEntityId");
+                    b.HasIndex("TransformEntityId");
 
                     b.ToTable("TransformConfigs");
+                });
+
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.TransformEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("RouteConfigId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RouteConfigId");
+
+                    b.ToTable("Transforms");
                 });
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.WebProxyConfigEntity", b =>
@@ -641,13 +648,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         .HasForeignKey("ClusterConfigEntityId");
                 });
 
-            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.DestinationConfigEntity", b =>
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.DestinationConfigMetadataEntity", b =>
                 {
-                    b.HasOne("Yarp.EfCore.Configuration.Entities.DestinationConfigMetadataEntity", "Metadata")
-                        .WithMany()
-                        .HasForeignKey("MetadataId");
-
-                    b.Navigation("Metadata");
+                    b.HasOne("Yarp.EfCore.Configuration.Entities.DestinationConfigEntity", null)
+                        .WithMany("Metadata")
+                        .HasForeignKey("DestinationConfigEntityId");
                 });
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.HealthCheckConfigEntity", b =>
@@ -676,17 +681,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", b =>
                 {
-                    b.HasOne("Yarp.EfCore.Configuration.Entities.ClusterConfigEntity", "Cluster")
-                        .WithMany()
-                        .HasForeignKey("ClusterId1");
-
                     b.HasOne("Yarp.EfCore.Configuration.Entities.RouteMatchEntity", "Match")
                         .WithMany()
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cluster");
 
                     b.Navigation("Match");
                 });
@@ -712,17 +711,6 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         .HasForeignKey("RouteMatchEntityId");
                 });
 
-            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouterConfigTransformConfigMappingEntity", b =>
-                {
-                    b.HasOne("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", "RouteConfigEntity")
-                        .WithMany("Transforms")
-                        .HasForeignKey("RouteConfigEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RouteConfigEntity");
-                });
-
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.SessionAffinityConfigEntity", b =>
                 {
                     b.HasOne("Yarp.EfCore.Configuration.Entities.SessionAffinityCookieConfigEntity", "Cookie")
@@ -734,15 +722,31 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.TransformConfigEntity", b =>
                 {
-                    b.HasOne("Yarp.EfCore.Configuration.Entities.RouterConfigTransformConfigMappingEntity", null)
-                        .WithMany("TransformConfigEntities")
-                        .HasForeignKey("RouterConfigTransformConfigMappingEntityId");
+                    b.HasOne("Yarp.EfCore.Configuration.Entities.TransformEntity", null)
+                        .WithMany("TransformConfigs")
+                        .HasForeignKey("TransformEntityId");
+                });
+
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.TransformEntity", b =>
+                {
+                    b.HasOne("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", "RouteConfig")
+                        .WithMany("Transforms")
+                        .HasForeignKey("RouteConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RouteConfig");
                 });
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.ClusterConfigEntity", b =>
                 {
                     b.Navigation("Destinations");
 
+                    b.Navigation("Metadata");
+                });
+
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.DestinationConfigEntity", b =>
+                {
                     b.Navigation("Metadata");
                 });
 
@@ -760,9 +764,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.Navigation("QueryParameters");
                 });
 
-            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouterConfigTransformConfigMappingEntity", b =>
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.TransformEntity", b =>
                 {
-                    b.Navigation("TransformConfigEntities");
+                    b.Navigation("TransformConfigs");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Configuration;
+
 namespace Yarp.EfCore.Configuration.Entities;
 
 public class SessionAffinityConfigEntity:BaseEntity
@@ -29,4 +31,16 @@ public class SessionAffinityConfigEntity:BaseEntity
     /// the <see cref="P:Yarp.ReverseProxy.Configuration.SessionAffinityConfig.Policy" /> is set to 'Cookie'.
     /// </summary>
     public SessionAffinityCookieConfigEntity? Cookie { get; init; }
+
+    public SessionAffinityConfig ToConfig()
+    {
+        return new SessionAffinityConfig()
+        {
+            FailurePolicy = FailurePolicy,
+            Policy = Policy,
+            AffinityKeyName = AffinityKeyName,
+            Cookie = Cookie?.ToConfig(),
+            Enabled = Enabled
+        };
+    }
 }

@@ -29,4 +29,15 @@ public class RouteHeaderEntity:BaseEntity
     /// Defaults to <c>false</c>.
     /// </summary>
     public bool IsCaseSensitive { get; init; }
+
+    public RouteHeader ToConfig()
+    {
+        return new RouteHeader
+        {
+            Mode = Mode,
+            IsCaseSensitive = IsCaseSensitive,
+            Name = Name,
+            Values = Values
+        };
+    }
 }
