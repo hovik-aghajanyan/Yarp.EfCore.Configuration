@@ -26,4 +26,33 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<SessionAffinityCookieConfigEntity> SessionAffinityCookieConfigs { get; set; } = null!;
     public DbSet<WebProxyConfigEntity> WebProxyConfigs { get; set; } = null!;
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .Navigation(e => e.Metadata).AutoInclude();
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .Navigation(e => e.Destinations).AutoInclude();
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .Navigation(e => e.HealthCheck).AutoInclude();
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .Navigation(e => e.HttpClient).AutoInclude();
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .Navigation(e => e.HttpRequest).AutoInclude();
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .Navigation(e => e.SessionAffinity).AutoInclude();
+        modelBuilder.Entity<RouteConfigEntity>()
+            .Navigation(e => e.Metadata).AutoInclude();
+        modelBuilder.Entity<RouteConfigEntity>()
+            .Navigation(e => e.Transforms).AutoInclude();
+        modelBuilder.Entity<RouteConfigEntity>()
+            .Navigation(e => e.Match).AutoInclude();
+        modelBuilder.Entity<TransformEntity>()
+            .Navigation(e => e.TransformConfigs).AutoInclude();
+        modelBuilder.Entity<ClusterConfigDestinationEntity>()
+            .Navigation(e => e.DestinationConfig).AutoInclude();
+
+
+        modelBuilder.Entity<RouteConfigEntity>().Property(r => r.AuthorizationPolicy)
+            .HasDefaultValue("anonymous");
+    }
 }

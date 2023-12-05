@@ -4,21 +4,14 @@ using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Configurations;
 
-public class EfCoreConfigurationProvider:IProxyConfigProvider
+public class EfCoreConfigurationProvider(ILogger<EfCoreConfigurationProvider> logger,
+        YarpDbContext dbContext)
+    : IProxyConfigProvider
 {
-    private readonly ILogger<EfCoreConfigurationProvider> _logger;
+    private readonly ILogger<EfCoreConfigurationProvider> _logger = logger;
 
-    private readonly YarpDbContext _dbContext;
     private volatile EfCoreConfig _config = new(Array.Empty<RouteConfig>(), Array.Empty<ClusterConfig>(), Guid.NewGuid().ToString("N"));
 
-    public EfCoreConfigurationProvider(
-        ILogger<EfCoreConfigurationProvider> logger,
-        YarpDbContext dbContext)
-    {
-        _logger = logger;
-        _dbContext = dbContext;
-        Update();
-    }
     /// <summary>
     /// Implementation of the IProxyConfigProvider.GetConfig method to supply the current snapshot of configuration
     /// </summary>
@@ -28,10 +21,16 @@ public class EfCoreConfigurationProvider:IProxyConfigProvider
     /// <summary>
     /// Swaps the config state with a new snapshot of the configuration, then signals that the old one is outdated.
     /// </summary>
-    public async void Update()
+    public async Task Update()
     {
-        var routes = await _dbContext.RouteConfigs.Where(r => r.IsEnabled).ToListAsync();
-        var clusters = await _dbContext.ClusterConfigs.ToListAsync();
+        var routes = await dbContext.RouteConfigs
+            .Include(r => r.Transforms)!
+                .ThenInclude(t => t.TransformConfigs)
+            .Include(r => r.Metadata)
+            .Include(r => r.Match.QueryParameters)
+            .Include(r => r.Match.Headers)
+            .Where(r => r.IsEnabled).ToListAsync();
+        var clusters = await dbContext.ClusterConfigs.ToListAsync();
         var newConfig = new EfCoreConfig(routes.Select(r => r.ToConfig()).ToList(), clusters.Select(r => r.ToConfig()).ToList(), Guid.NewGuid().ToString("N"));
         UpdateInternal(newConfig);
     }
