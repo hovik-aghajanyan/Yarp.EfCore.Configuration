@@ -50,9 +50,5 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
             .Navigation(e => e.TransformConfigs).AutoInclude();
         modelBuilder.Entity<ClusterConfigDestinationEntity>()
             .Navigation(e => e.DestinationConfig).AutoInclude();
-
-
-        modelBuilder.Entity<RouteConfigEntity>().Property(r => r.AuthorizationPolicy)
-            .HasDefaultValue("anonymous");
     }
 }
