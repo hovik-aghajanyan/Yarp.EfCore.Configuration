@@ -18,7 +18,10 @@ builder.Services.AddReverseProxy()
     .LoadFromPostgreSql(o =>
     {
         o.ConnectionString = "Host=localhost;Port=5432;Database=yarp_new;Username=superfleet;Password=superfleet";
-        // o.CheckUpdateInterval = TimeSpan.FromMinutes(1);
+        o.CheckUpdateInterval = TimeSpan.FromMinutes(1);
+        o.RetryCount = 3;
+        o.RetryInterval = TimeSpan.FromSeconds(10);
+        o.ProxyName = "MyProxy";
     })
     ;
 
