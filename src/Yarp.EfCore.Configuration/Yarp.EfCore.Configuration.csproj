@@ -8,6 +8,9 @@
         <Authors>Hovik Aghajanyan</Authors>
         <Description>Common package to configure Yarp from DB</Description>
         <RepositoryUrl>https://github.com/hovik-aghajanyan/Yarp.EfCore.Configuration</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Copyright>Hovik Aghajanyan</Copyright>
+        <PackageTags>yarp</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

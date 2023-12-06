@@ -5,6 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>12</LangVersion>
+        <Authors>Hovik Aghajanyan</Authors>
+        <Description>PostgreSql Provider for Yarp.EfCore.Configuration</Description>
+        <RepositoryUrl>https://github.com/hovik-aghajanyan/Yarp.EfCore.Configuration</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Copyright>Hovik Aghajanyan</Copyright>
+        <PackageTags>yarp</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
