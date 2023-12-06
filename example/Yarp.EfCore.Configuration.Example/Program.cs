@@ -10,7 +10,10 @@ builder.Services.AddReverseProxy()
     .LoadFromMsSql(config =>
     {
         config.ConnectionString = "Server=localhost;Database=yarp_new;User Id=sa;Password=Q#w2e3r4;TrustServerCertificate=true";
-        // config.CheckUpdateInterval = TimeSpan.FromMinutes(1);
+        config.CheckUpdateInterval = TimeSpan.FromMinutes(1);
+        config.RetryCount = 3;
+        config.RetryInterval = TimeSpan.FromSeconds(10);
+        config.ProxyName = "MyProxy";
     })
     .LoadFromPostgreSql(o =>
     {
