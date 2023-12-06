@@ -50,5 +50,26 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
             .Navigation(e => e.TransformConfigs).AutoInclude();
         modelBuilder.Entity<ClusterConfigDestinationEntity>()
             .Navigation(e => e.DestinationConfig).AutoInclude();
+        
+        modelBuilder.Entity<ClusterConfigDestinationEntity>()
+            .Navigation(e => e.ClusterConfig).AutoInclude();
+        
+        modelBuilder.Entity<DestinationConfigEntity>()
+            .Navigation(e => e.Metadata).AutoInclude();
+        
+        modelBuilder.Entity<HealthCheckConfigEntity>()
+            .Navigation(e => e.Passive).AutoInclude();
+        modelBuilder.Entity<HealthCheckConfigEntity>()
+            .Navigation(e => e.Active).AutoInclude();
+        modelBuilder.Entity<HttpClientConfigEntity>()
+            .Navigation(e => e.WebProxy).AutoInclude();
+        modelBuilder.Entity<RouteMatchEntity>()
+            .Navigation(e => e.Headers).AutoInclude();
+        modelBuilder.Entity<RouteMatchEntity>()
+            .Navigation(e => e.QueryParameters).AutoInclude();
+        modelBuilder.Entity<SessionAffinityConfigEntity>()
+            .Navigation(e => e.Cookie).AutoInclude();
+        modelBuilder.Entity<TransformEntity>()
+            .Navigation(e => e.RouteConfig).AutoInclude();
     }
 }
