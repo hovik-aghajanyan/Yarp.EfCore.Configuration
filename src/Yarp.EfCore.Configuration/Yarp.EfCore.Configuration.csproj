@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Version>1.0.1</Version>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>12</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
         <Authors>Hovik Aghajanyan</Authors>
         <Description>Common package to configure Yarp from DB</Description>
         <RepositoryUrl>https://github.com/hovik-aghajanyan/Yarp.EfCore.Configuration</RepositoryUrl>
