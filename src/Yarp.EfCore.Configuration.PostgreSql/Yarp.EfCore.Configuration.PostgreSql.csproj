@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>12</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Hovik Aghajanyan</Authors>
         <Description>PostgreSql Provider for Yarp.EfCore.Configuration</Description>
         <RepositoryUrl>https://github.com/hovik-aghajanyan/Yarp.EfCore.Configuration</RepositoryUrl>
