@@ -49,3 +49,8 @@ Each provider has the same configuration options:
 - `RetryCount` - count of retries to connect to DB (Optional, default value is 3)
 - `RetryInterval` - interval between retries to connect to DB (Optional, default value is 10 seconds)
 - `ProxyName` - name of proxy (Optional, if proxy name is not specified, proxy will load all specified `RouteConfigs` otherwise only routes with specified proxy name will be loaded from `ProxyConfigs` table)
+
+Also you can use helper method to keep your yarp db up to date:
+```csharp
+app.MigrateYarpDb();
+```
