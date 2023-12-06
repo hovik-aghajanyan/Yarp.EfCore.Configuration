@@ -9,12 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddReverseProxy()
     .LoadFromMsSql(config =>
     {
-        config.ConnectionString = "Server=localhost;Database=yarp;User Id=sa;Password=Q#w2e3r4;TrustServerCertificate=true";
+        config.ConnectionString = "Server=localhost;Database=yarp_new;User Id=sa;Password=Q#w2e3r4;TrustServerCertificate=true";
         // config.CheckUpdateInterval = TimeSpan.FromMinutes(1);
     })
     .LoadFromPostgreSql(o =>
     {
-        o.ConnectionString = "Host=localhost;Port=5432;Database=yarp;Username=superfleet;Password=superfleet";
+        o.ConnectionString = "Host=localhost;Port=5432;Database=yarp_new;Username=superfleet;Password=superfleet";
         // o.CheckUpdateInterval = TimeSpan.FromMinutes(1);
     })
     ;

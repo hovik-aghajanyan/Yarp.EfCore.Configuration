@@ -13,7 +13,7 @@ using Yarp.EfCore.Configuration.PostgreSql;
 namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgreYarpDbContext))]
-    [Migration("20231205103059_Initial")]
+    [Migration("20231206150530_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -300,6 +300,31 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PassiveHealthCheckConfigs");
+                });
+
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.ProxyConfigEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RouteConfigId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RouteConfigId");
+
+                    b.HasIndex("Name", "RouteConfigId")
+                        .IsUnique();
+
+                    b.ToTable("ProxyConfigs");
                 });
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", b =>
@@ -677,6 +702,17 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         .HasForeignKey("WebProxyId");
 
                     b.Navigation("WebProxy");
+                });
+
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.ProxyConfigEntity", b =>
+                {
+                    b.HasOne("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", "RouteConfig")
+                        .WithMany()
+                        .HasForeignKey("RouteConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RouteConfig");
                 });
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", b =>

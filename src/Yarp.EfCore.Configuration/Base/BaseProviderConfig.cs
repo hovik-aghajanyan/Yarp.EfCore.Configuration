@@ -6,4 +6,6 @@ public class BaseProviderConfig
     /// If Interval not specified then the configuration will not be updated automatically
     /// </summary>
     public TimeSpan? CheckUpdateInterval { get; set; } = null;
+
+    public string? ProxyName { get; set; } = null;
 }

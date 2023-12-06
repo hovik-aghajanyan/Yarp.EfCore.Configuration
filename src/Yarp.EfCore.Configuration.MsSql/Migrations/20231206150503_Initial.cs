@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
+namespace Yarp.EfCore.Configuration.MsSql.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -17,13 +15,13 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "ActiveHealthCheckConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Enabled = table.Column<bool>(type: "boolean", nullable: true),
-                    Interval = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    Timeout = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    Policy = table.Column<string>(type: "text", nullable: true),
-                    Path = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true),
+                    Interval = table.Column<TimeSpan>(type: "time", nullable: true),
+                    Timeout = table.Column<TimeSpan>(type: "time", nullable: true),
+                    Policy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,11 +32,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "DestinationConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Address = table.Column<string>(type: "text", nullable: false),
-                    Health = table.Column<string>(type: "text", nullable: true),
-                    Host = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Health = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Host = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,12 +47,12 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "ForwarderRequestConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ActivityTimeout = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    Version = table.Column<string>(type: "text", nullable: true),
-                    VersionPolicy = table.Column<int>(type: "integer", nullable: true),
-                    AllowResponseBuffering = table.Column<bool>(type: "boolean", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ActivityTimeout = table.Column<TimeSpan>(type: "time", nullable: true),
+                    Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VersionPolicy = table.Column<int>(type: "int", nullable: true),
+                    AllowResponseBuffering = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,11 +63,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "PassiveHealthCheckConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Enabled = table.Column<bool>(type: "boolean", nullable: true),
-                    Policy = table.Column<string>(type: "text", nullable: true),
-                    ReactivationPeriod = table.Column<TimeSpan>(type: "interval", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true),
+                    Policy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReactivationPeriod = table.Column<TimeSpan>(type: "time", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,11 +78,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "RouteMatches",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Methods = table.Column<List<string>>(type: "text[]", nullable: true),
-                    Hosts = table.Column<List<string>>(type: "text[]", nullable: true),
-                    Path = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Methods = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hosts = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,16 +93,16 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "SessionAffinityCookieConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Path = table.Column<string>(type: "text", nullable: true),
-                    Domain = table.Column<string>(type: "text", nullable: true),
-                    HttpOnly = table.Column<bool>(type: "boolean", nullable: true),
-                    SecurePolicy = table.Column<int>(type: "integer", nullable: true),
-                    SameSite = table.Column<int>(type: "integer", nullable: true),
-                    Expiration = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    MaxAge = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    IsEssential = table.Column<bool>(type: "boolean", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HttpOnly = table.Column<bool>(type: "bit", nullable: true),
+                    SecurePolicy = table.Column<int>(type: "int", nullable: true),
+                    SameSite = table.Column<int>(type: "int", nullable: true),
+                    Expiration = table.Column<TimeSpan>(type: "time", nullable: true),
+                    MaxAge = table.Column<TimeSpan>(type: "time", nullable: true),
+                    IsEssential = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,11 +113,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "WebProxyConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Address = table.Column<string>(type: "text", nullable: true),
-                    BypassOnLocal = table.Column<bool>(type: "boolean", nullable: true),
-                    UseDefaultCredentials = table.Column<bool>(type: "boolean", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BypassOnLocal = table.Column<bool>(type: "bit", nullable: true),
+                    UseDefaultCredentials = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,17 +128,17 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "DestinationConfigMetadata",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    DestinationConfigEntityId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DestinationConfigEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DestinationConfigMetadata", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DestinationConfigMetadata_DestinationConfigs_DestinationCon~",
+                        name: "FK_DestinationConfigMetadata_DestinationConfigs_DestinationConfigEntityId",
                         column: x => x.DestinationConfigEntityId,
                         principalTable: "DestinationConfigs",
                         principalColumn: "Id");
@@ -150,11 +148,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "HealthCheckConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PassiveId = table.Column<int>(type: "integer", nullable: true),
-                    ActiveId = table.Column<int>(type: "integer", nullable: true),
-                    AvailableDestinationsPolicy = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PassiveId = table.Column<int>(type: "int", nullable: true),
+                    ActiveId = table.Column<int>(type: "int", nullable: true),
+                    AvailableDestinationsPolicy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -175,19 +173,19 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "RouteConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RouteId = table.Column<string>(type: "text", nullable: false),
-                    MatchId = table.Column<int>(type: "integer", nullable: false),
-                    Order = table.Column<int>(type: "integer", nullable: true),
-                    ClusterId = table.Column<string>(type: "text", nullable: true),
-                    AuthorizationPolicy = table.Column<string>(type: "text", nullable: true),
-                    CorsPolicy = table.Column<string>(type: "text", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RouteId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MatchId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: true),
+                    ClusterId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuthorizationPolicy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CorsPolicy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MaxRequestBodySize = table.Column<long>(type: "bigint", nullable: true),
-                    RateLimiterPolicy = table.Column<string>(type: "text", nullable: true),
-                    TimeoutPolicy = table.Column<string>(type: "text", nullable: true),
-                    Timeout = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    IsEnabled = table.Column<bool>(type: "boolean", nullable: false)
+                    RateLimiterPolicy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeoutPolicy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Timeout = table.Column<TimeSpan>(type: "time", nullable: true),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,13 +202,13 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "RouteHeaders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Values = table.Column<List<string>>(type: "text[]", nullable: true),
-                    Mode = table.Column<int>(type: "integer", nullable: false),
-                    IsCaseSensitive = table.Column<bool>(type: "boolean", nullable: false),
-                    RouteMatchEntityId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Values = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mode = table.Column<int>(type: "int", nullable: false),
+                    IsCaseSensitive = table.Column<bool>(type: "bit", nullable: false),
+                    RouteMatchEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -226,13 +224,13 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "RouteQueryParameters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Values = table.Column<List<string>>(type: "text[]", nullable: true),
-                    Mode = table.Column<int>(type: "integer", nullable: false),
-                    IsCaseSensitive = table.Column<bool>(type: "boolean", nullable: false),
-                    RouteMatchEntityId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Values = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mode = table.Column<int>(type: "int", nullable: false),
+                    IsCaseSensitive = table.Column<bool>(type: "bit", nullable: false),
+                    RouteMatchEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,13 +246,13 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "SessionAffinityConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Enabled = table.Column<bool>(type: "boolean", nullable: true),
-                    Policy = table.Column<string>(type: "text", nullable: true),
-                    FailurePolicy = table.Column<string>(type: "text", nullable: true),
-                    AffinityKeyName = table.Column<string>(type: "text", nullable: false),
-                    CookieId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Enabled = table.Column<bool>(type: "bit", nullable: true),
+                    Policy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FailurePolicy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AffinityKeyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CookieId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -270,14 +268,14 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "HttpClientConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    SslProtocols = table.Column<int>(type: "integer", nullable: true),
-                    DangerousAcceptAnyServerCertificate = table.Column<bool>(type: "boolean", nullable: true),
-                    MaxConnectionsPerServer = table.Column<int>(type: "integer", nullable: true),
-                    WebProxyId = table.Column<int>(type: "integer", nullable: true),
-                    EnableMultipleHttp2Connections = table.Column<bool>(type: "boolean", nullable: true),
-                    RequestHeaderEncoding = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SslProtocols = table.Column<int>(type: "int", nullable: true),
+                    DangerousAcceptAnyServerCertificate = table.Column<bool>(type: "bit", nullable: true),
+                    MaxConnectionsPerServer = table.Column<int>(type: "int", nullable: true),
+                    WebProxyId = table.Column<int>(type: "int", nullable: true),
+                    EnableMultipleHttp2Connections = table.Column<bool>(type: "bit", nullable: true),
+                    RequestHeaderEncoding = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -290,14 +288,34 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProxyConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RouteConfigId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProxyConfigs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProxyConfigs_RouteConfigs_RouteConfigId",
+                        column: x => x.RouteConfigId,
+                        principalTable: "RouteConfigs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RouteConfigMetadata",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    RouteConfigEntityId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RouteConfigEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -313,9 +331,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "Transforms",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RouteConfigId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RouteConfigId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -332,14 +350,14 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "ClusterConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ClusterId = table.Column<string>(type: "text", nullable: false),
-                    LoadBalancingPolicy = table.Column<string>(type: "text", nullable: true),
-                    SessionAffinityId = table.Column<int>(type: "integer", nullable: true),
-                    HealthCheckId = table.Column<int>(type: "integer", nullable: true),
-                    HttpClientId = table.Column<int>(type: "integer", nullable: true),
-                    HttpRequestId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClusterId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LoadBalancingPolicy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SessionAffinityId = table.Column<int>(type: "int", nullable: true),
+                    HealthCheckId = table.Column<int>(type: "int", nullable: true),
+                    HttpClientId = table.Column<int>(type: "int", nullable: true),
+                    HttpRequestId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -370,11 +388,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "TransformConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    TransformEntityId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransformEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -390,11 +408,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "ClusterConfigsDestinations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    ClusterConfigId = table.Column<int>(type: "integer", nullable: false),
-                    DestinationConfigId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClusterConfigId = table.Column<int>(type: "int", nullable: false),
+                    DestinationConfigId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -406,7 +424,7 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClusterConfigsDestinations_DestinationConfigs_DestinationCo~",
+                        name: "FK_ClusterConfigsDestinations_DestinationConfigs_DestinationConfigId",
                         column: x => x.DestinationConfigId,
                         principalTable: "DestinationConfigs",
                         principalColumn: "Id",
@@ -417,11 +435,11 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 name: "ClusterConfigsMetadata",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Key = table.Column<string>(type: "text", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false),
-                    ClusterConfigEntityId = table.Column<int>(type: "integer", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClusterConfigEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -489,6 +507,17 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                 column: "WebProxyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProxyConfigs_Name_RouteConfigId",
+                table: "ProxyConfigs",
+                columns: new[] { "Name", "RouteConfigId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProxyConfigs_RouteConfigId",
+                table: "ProxyConfigs",
+                column: "RouteConfigId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RouteConfigMetadata_RouteConfigEntityId",
                 table: "RouteConfigMetadata",
                 column: "RouteConfigEntityId");
@@ -535,6 +564,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
             migrationBuilder.DropTable(
                 name: "DestinationConfigMetadata");
+
+            migrationBuilder.DropTable(
+                name: "ProxyConfigs");
 
             migrationBuilder.DropTable(
                 name: "RouteConfigMetadata");

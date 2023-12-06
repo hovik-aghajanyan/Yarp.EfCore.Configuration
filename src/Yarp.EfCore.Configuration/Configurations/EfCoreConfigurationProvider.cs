@@ -6,7 +6,8 @@ using Yarp.ReverseProxy.Configuration;
 namespace Yarp.EfCore.Configuration.Configurations;
 
 public class EfCoreConfigurationProvider<TDbContext>(ILogger<TDbContext> logger,
-        TDbContext dbContext)
+        TDbContext dbContext
+        )
     : IProxyConfigProvider where TDbContext : YarpDbContext
 {
 
@@ -21,9 +22,14 @@ public class EfCoreConfigurationProvider<TDbContext>(ILogger<TDbContext> logger,
     /// <summary>
     /// Swaps the config state with a new snapshot of the configuration, then signals that the old one is outdated.
     /// </summary>
-    public async Task Update()
+    public async Task Update(string? proxyName = null)
     {
-        var routes = await dbContext.RouteConfigs.Where(r => r.IsEnabled).ToListAsync();
+
+        var routes = proxyName is null
+            ? await dbContext.RouteConfigs.Where(r => r.IsEnabled).ToListAsync()
+            : await dbContext.ProxyConfigs.Where(p => p.Name.ToLower() == proxyName.ToLower())
+                .Select(p => p.RouteConfig).Where(r => r.IsEnabled).ToListAsync();
+        
         var clusters = await dbContext.ClusterConfigs.ToListAsync();
         var newConfig = new EfCoreConfig(routes.Select(r => r.ToConfig()).ToList(), clusters.Select(r => r.ToConfig()).ToList(), Guid.NewGuid().ToString("N"));
         UpdateInternal(newConfig);

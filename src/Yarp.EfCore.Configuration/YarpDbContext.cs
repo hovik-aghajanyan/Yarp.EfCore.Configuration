@@ -25,6 +25,8 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<SessionAffinityConfigEntity> SessionAffinityConfigs { get; set; } = null!;
     public DbSet<SessionAffinityCookieConfigEntity> SessionAffinityCookieConfigs { get; set; } = null!;
     public DbSet<WebProxyConfigEntity> WebProxyConfigs { get; set; } = null!;
+    public DbSet<ProxyConfigEntity> ProxyConfigs { get; set; } = null!;
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -71,5 +73,10 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
             .Navigation(e => e.Cookie).AutoInclude();
         modelBuilder.Entity<TransformEntity>()
             .Navigation(e => e.RouteConfig).AutoInclude();
+        modelBuilder.Entity<ProxyConfigEntity>()
+            .Navigation(e => e.RouteConfig).AutoInclude();
+
+        modelBuilder.Entity<ProxyConfigEntity>()
+            .HasIndex(p => new {p.Name, p.RouteConfigId}).IsUnique();
     }
 }

@@ -23,12 +23,19 @@ public class UpdateCheckService(IEnumerable<IProxyConfigProvider> configurationP
     
     private async Task Update()
     {
-        foreach (var configurationProvider in configurationProviders)
+        try
         {
-            if(configurationProvider is EfCoreConfigurationProvider<MsSqlYarpDbContext> efCoreConfigurationProvider)
+            foreach (var configurationProvider in configurationProviders)
             {
-                await efCoreConfigurationProvider.Update();
+                if(configurationProvider is EfCoreConfigurationProvider<MsSqlYarpDbContext> efCoreConfigurationProvider)
+                {
+                    await efCoreConfigurationProvider.Update();
+                }
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
         }
     }
 }

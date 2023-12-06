@@ -299,6 +299,31 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.ToTable("PassiveHealthCheckConfigs");
                 });
 
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.ProxyConfigEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RouteConfigId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RouteConfigId");
+
+                    b.HasIndex("Name", "RouteConfigId")
+                        .IsUnique();
+
+                    b.ToTable("ProxyConfigs");
+                });
+
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -674,6 +699,17 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                         .HasForeignKey("WebProxyId");
 
                     b.Navigation("WebProxy");
+                });
+
+            modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.ProxyConfigEntity", b =>
+                {
+                    b.HasOne("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", "RouteConfig")
+                        .WithMany()
+                        .HasForeignKey("RouteConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RouteConfig");
                 });
 
             modelBuilder.Entity("Yarp.EfCore.Configuration.Entities.RouteConfigEntity", b =>
