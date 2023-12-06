@@ -5,6 +5,7 @@ using Yarp.EfCore.Configuration.Configurations;
 using Yarp.EfCore.Configuration.Extensions;
 using Yarp.EfCore.Configuration.PostgreSql;
 using Yarp.EfCore.Configuration.PostgreSql.Configs;
+using Yarp.EfCore.Configuration.PostgreSql.Services;
 using Yarp.ReverseProxy.Configuration;
 
 // ReSharper disable once CheckNamespace
@@ -16,7 +17,7 @@ public static class ReverseProxyBuilderExtensions
     {
         var config = new PostgreSqlConfig();
         options(config);
-        builder.Services.AddSingleton<BaseProviderConfig>(config);
+        builder.Services.AddKeyedSingleton<BaseProviderConfig>(nameof(PostgreSql),config);
         builder.Services.AddDbContext<YarpDbContext, PostgreYarpDbContext>(o =>
         {
             o.UseNpgsql(config.ConnectionString, optionsBuilder =>
@@ -25,10 +26,10 @@ public static class ReverseProxyBuilderExtensions
                 optionsBuilder.MigrationsAssembly(typeof(PostgreYarpDbContext).Assembly.FullName);
             });
         }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-        builder.Services.AddSingleton<IProxyConfigProvider,EfCoreConfigurationProvider>();
+        builder.Services.AddSingleton<IProxyConfigProvider,EfCoreConfigurationProvider<PostgreYarpDbContext>>();
         if(config.CheckUpdateInterval is not null)
         {
-            builder.Services.AddUpdateService();
+            builder.Services.AddHostedService<UpdateCheckService>();
         }
         return builder;
     }

@@ -1,11 +1,13 @@
+using System.Collections;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Yarp.EfCore.Configuration.Base;
 using Yarp.EfCore.Configuration.Configurations;
 using Yarp.ReverseProxy.Configuration;
 
-namespace Yarp.EfCore.Configuration.Services;
+namespace Yarp.EfCore.Configuration.PostgreSql.Services;
 
-public class UpdateCheckService(IEnumerable<IProxyConfigProvider> configurationProviders, BaseProviderConfig config)
+public class UpdateCheckService(IEnumerable<IProxyConfigProvider> configurationProviders, [FromKeyedServices(nameof(PostgreSql))] BaseProviderConfig config)
     : BackgroundService
 {
     private readonly TimeSpan? _checkInterval = config.CheckUpdateInterval;
@@ -24,8 +26,10 @@ public class UpdateCheckService(IEnumerable<IProxyConfigProvider> configurationP
     {
         foreach (var configurationProvider in configurationProviders)
         {
-            if(configurationProvider is EfCoreConfigurationProvider efCoreConfigurationProvider)
+            if(configurationProvider is EfCoreConfigurationProvider<PostgreYarpDbContext> efCoreConfigurationProvider)
+            {
                 await efCoreConfigurationProvider.Update();
+            }
         }
     }
 }

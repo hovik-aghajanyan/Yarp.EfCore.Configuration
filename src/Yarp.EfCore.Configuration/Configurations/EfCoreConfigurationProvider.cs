@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Yarp.EfCore.Configuration.Entities;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Configurations;
 
-public class EfCoreConfigurationProvider(ILogger<EfCoreConfigurationProvider> logger,
-        YarpDbContext dbContext)
-    : IProxyConfigProvider
+public class EfCoreConfigurationProvider<TDbContext>(ILogger<TDbContext> logger,
+        TDbContext dbContext)
+    : IProxyConfigProvider where TDbContext : YarpDbContext
 {
-    private readonly ILogger<EfCoreConfigurationProvider> _logger = logger;
 
     private volatile EfCoreConfig _config = new(Array.Empty<RouteConfig>(), Array.Empty<ClusterConfig>(), Guid.NewGuid().ToString("N"));
 
@@ -23,13 +23,7 @@ public class EfCoreConfigurationProvider(ILogger<EfCoreConfigurationProvider> lo
     /// </summary>
     public async Task Update()
     {
-        var routes = await dbContext.RouteConfigs
-            .Include(r => r.Transforms)!
-                .ThenInclude(t => t.TransformConfigs)
-            .Include(r => r.Metadata)
-            .Include(r => r.Match.QueryParameters)
-            .Include(r => r.Match.Headers)
-            .Where(r => r.IsEnabled).ToListAsync();
+        var routes = await dbContext.RouteConfigs.Where(r => r.IsEnabled).ToListAsync();
         var clusters = await dbContext.ClusterConfigs.ToListAsync();
         var newConfig = new EfCoreConfig(routes.Select(r => r.ToConfig()).ToList(), clusters.Select(r => r.ToConfig()).ToList(), Guid.NewGuid().ToString("N"));
         UpdateInternal(newConfig);

@@ -5,6 +5,7 @@ using Yarp.EfCore.Configuration.Configurations;
 using Yarp.EfCore.Configuration.Extensions;
 using Yarp.EfCore.Configuration.MsSql;
 using Yarp.EfCore.Configuration.MsSql.Configs;
+using Yarp.EfCore.Configuration.MsSql.Services;
 using Yarp.ReverseProxy.Configuration;
 
 // ReSharper disable once CheckNamespace
@@ -16,8 +17,8 @@ public static class ReverseProxyBuilderExtensions
     {
         var config = new MsSqlConfig();
         options(config);
-        builder.Services.AddSingleton<BaseProviderConfig>(config);
-        builder.Services.AddDbContext<YarpDbContext, MsSqlYarpDbContext>(o =>
+        builder.Services.AddKeyedSingleton<BaseProviderConfig>(nameof(MsSql),config);
+        builder.Services.AddDbContext<MsSqlYarpDbContext>(o =>
         {
             o.UseSqlServer(config.ConnectionString, optionsBuilder =>
             {
@@ -25,10 +26,10 @@ public static class ReverseProxyBuilderExtensions
                 optionsBuilder.MigrationsAssembly(typeof(MsSqlYarpDbContext).Assembly.FullName);
             });
         }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-        builder.Services.AddSingleton<IProxyConfigProvider,EfCoreConfigurationProvider>();
+        builder.Services.AddSingleton<IProxyConfigProvider,EfCoreConfigurationProvider<MsSqlYarpDbContext>>();
         if(config.CheckUpdateInterval is not null)
         {
-            builder.Services.AddUpdateService();
+            builder.Services.AddHostedService<UpdateCheckService>();
         }
         return builder;
     }
