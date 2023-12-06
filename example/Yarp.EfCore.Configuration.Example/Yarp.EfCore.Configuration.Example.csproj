@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Yarp.EfCore.Configuration.MsSql\Yarp.EfCore.Configuration.MsSql.csproj" />
       <ProjectReference Include="..\..\src\Yarp.EfCore.Configuration.PostgreSql\Yarp.EfCore.Configuration.PostgreSql.csproj" />
       <ProjectReference Include="..\..\src\Yarp.EfCore.Configuration\Yarp.EfCore.Configuration.csproj" />
     </ItemGroup>

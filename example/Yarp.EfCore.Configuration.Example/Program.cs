@@ -6,11 +6,15 @@ using Yarp.ReverseProxy.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddReverseProxy()
+    .LoadFromMsSql(config =>
+    {
+        config.ConnectionString = "";
+    })
     .LoadFromPostgreSql(o =>
-{
-    o.ConnectionString = "Host=localhost;Port=5432;Database=yarp;Username=superfleet;Password=superfleet";
-    o.CheckUpdateInterval = TimeSpan.FromMinutes(2);
-});
+    {
+        o.ConnectionString = "Host=localhost;Port=5432;Database=yarp;Username=superfleet;Password=superfleet";
+        o.CheckUpdateInterval = TimeSpan.FromMinutes(2);
+    });
 
 
 

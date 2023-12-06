@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Yarp.EfCore.Configuration\Yarp.EfCore.Configuration.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    </ItemGroup>
+
 </Project>
