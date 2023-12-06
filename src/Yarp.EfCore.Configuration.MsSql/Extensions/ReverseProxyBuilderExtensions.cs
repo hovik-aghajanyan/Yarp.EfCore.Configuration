@@ -27,10 +27,7 @@ public static class ReverseProxyBuilderExtensions
             });
         }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
         builder.Services.AddSingleton<IProxyConfigProvider,EfCoreConfigurationProvider<MsSqlYarpDbContext>>();
-        if(config.CheckUpdateInterval is not null)
-        {
-            builder.Services.AddHostedService<UpdateCheckService>();
-        }
+        builder.Services.AddHostedService<UpdateCheckService>();
         return builder;
     }
 }
