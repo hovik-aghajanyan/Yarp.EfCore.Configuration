@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Yarp.EfCore.Configuration.Base;
@@ -29,5 +30,13 @@ public static class ReverseProxyBuilderExtensions
         builder.Services.AddSingleton<IProxyConfigProvider,EfCoreConfigurationProvider<PostgreYarpDbContext>>();
         builder.Services.AddHostedService<UpdateCheckService>();
         return builder;
+    }
+    
+    
+    public static IApplicationBuilder MigrateConfigToDb(this IApplicationBuilder app)
+    {
+        app.MigrateYarpDb<PostgreYarpDbContext>();
+        app.MigrateConfigsToDb<PostgreYarpDbContext>();
+        return app;
     }
 }
