@@ -78,5 +78,11 @@ public class YarpDbContext(DbContextOptions options) : DbContext(options)
 
         modelBuilder.Entity<ProxyConfigEntity>()
             .HasIndex(p => new {p.Name, p.RouteConfigId}).IsUnique();
+        
+        modelBuilder.Entity<RouteConfigEntity>()
+            .HasIndex(p => p.RouteId).IsUnique();
+        
+        modelBuilder.Entity<ClusterConfigEntity>()
+            .HasIndex(p => p.ClusterId).IsUnique();
     }
 }

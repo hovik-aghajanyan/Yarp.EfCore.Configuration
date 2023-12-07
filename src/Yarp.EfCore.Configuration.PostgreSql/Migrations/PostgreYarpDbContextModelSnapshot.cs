@@ -107,6 +107,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClusterId")
+                        .IsUnique();
+
                     b.HasIndex("HealthCheckId");
 
                     b.HasIndex("HttpClientId");
@@ -369,6 +372,9 @@ namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MatchId");
+
+                    b.HasIndex("RouteId")
+                        .IsUnique();
 
                     b.ToTable("RouteConfigs");
                 });
