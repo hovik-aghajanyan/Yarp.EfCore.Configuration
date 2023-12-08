@@ -31,7 +31,7 @@ public class UpdateCheckService(IEnumerable<IProxyConfigProvider> configurationP
                 if (configurationProvider is EfCoreConfigurationProvider<PostgreYarpDbContext>
                     efCoreConfigurationProvider)
                 {
-                    await efCoreConfigurationProvider.Update();
+                    await efCoreConfigurationProvider.Update(config.ProxyName);
                 }
             }
         }

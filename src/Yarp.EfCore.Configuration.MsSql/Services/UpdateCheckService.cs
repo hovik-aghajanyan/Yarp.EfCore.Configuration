@@ -29,7 +29,7 @@ public class UpdateCheckService(IEnumerable<IProxyConfigProvider> configurationP
             {
                 if(configurationProvider is EfCoreConfigurationProvider<MsSqlYarpDbContext> efCoreConfigurationProvider)
                 {
-                    await efCoreConfigurationProvider.Update();
+                    await efCoreConfigurationProvider.Update(config.ProxyName);
                 }
             }
         }
