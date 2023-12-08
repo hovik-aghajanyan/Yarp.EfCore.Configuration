@@ -46,11 +46,11 @@ public static class ApplicationBuilderExtensions
         var context = scope.ServiceProvider.GetRequiredService<TContext>();
         if(routes.Any())
         {
-            context.AddRange(routes);
+            context.AddRange(routes.Select(r => r.ToEntity()));
         }
         if(clusters.Any())
         {
-            context.AddRange(clusters);
+            context.AddRange(clusters.Select(c => c.ToEntity()));
         }
         if(routes.Any() || clusters.Any())
         {
