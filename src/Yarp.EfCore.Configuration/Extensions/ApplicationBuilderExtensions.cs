@@ -31,14 +31,31 @@ public static class ApplicationBuilderExtensions
         List<ClusterConfig> clusters = new();
         foreach (var provider in providers)
         {
-            routes.AddRange(provider.GetConfig().Routes);
-            clusters.AddRange(provider.GetConfig().Clusters);
+            var routeConfig = provider.GetConfig().Routes;
+            var clusterConfig = provider.GetConfig().Clusters;
+            if(routeConfig.Any())
+            {
+                routes.AddRange(routeConfig);
+            }
+            if(clusterConfig.Any())
+            {
+                clusters.AddRange(clusterConfig);
+            }
         }
         using var scope = app.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<TContext>();
-        context.AddRange(routes);
-        context.AddRange(clusters);
-        context.SaveChanges();
+        if(routes.Any())
+        {
+            context.AddRange(routes);
+        }
+        if(clusters.Any())
+        {
+            context.AddRange(clusters);
+        }
+        if(routes.Any() || clusters.Any())
+        {
+            context.SaveChanges();
+        }
         return app;
     }
 }
