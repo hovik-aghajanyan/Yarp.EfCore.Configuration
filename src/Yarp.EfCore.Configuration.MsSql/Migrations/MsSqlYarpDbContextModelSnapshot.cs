@@ -37,10 +37,12 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("time");
 
                     b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Policy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<TimeSpan?>("Timeout")
                         .HasColumnType("time");
@@ -66,7 +68,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -87,7 +90,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("ClusterId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("HealthCheckId")
                         .HasColumnType("int");
@@ -99,7 +103,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LoadBalancingPolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("SessionAffinityId")
                         .HasColumnType("int");
@@ -133,11 +138,13 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -156,13 +163,16 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Health")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Host")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -182,11 +192,13 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -210,7 +222,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Version")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("VersionPolicy")
                         .HasColumnType("int");
@@ -232,7 +245,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AvailableDestinationsPolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("PassiveId")
                         .HasColumnType("int");
@@ -264,7 +278,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RequestHeaderEncoding")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("SslProtocols")
                         .HasColumnType("int");
@@ -291,7 +306,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Policy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<TimeSpan?>("ReactivationPeriod")
                         .HasColumnType("time");
@@ -311,7 +327,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("RouteConfigId")
                         .HasColumnType("int");
@@ -335,13 +352,16 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AuthorizationPolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ClusterId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CorsPolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
@@ -356,17 +376,20 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RateLimiterPolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("RouteId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<TimeSpan?>("Timeout")
                         .HasColumnType("time");
 
                     b.Property<string>("TimeoutPolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -388,14 +411,16 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("RouteConfigEntityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -420,7 +445,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("RouteMatchEntityId")
                         .HasColumnType("int");
@@ -450,7 +476,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -473,7 +500,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("RouteMatchEntityId")
                         .HasColumnType("int");
@@ -498,7 +526,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("AffinityKeyName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("CookieId")
                         .HasColumnType("int");
@@ -507,10 +536,12 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FailurePolicy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Policy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -528,7 +559,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Domain")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<TimeSpan?>("Expiration")
                         .HasColumnType("time");
@@ -543,7 +575,8 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
                         .HasColumnType("time");
 
                     b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int?>("SameSite")
                         .HasColumnType("int");
@@ -566,14 +599,16 @@ namespace Yarp.EfCore.Configuration.MsSql.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("TransformEntityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 

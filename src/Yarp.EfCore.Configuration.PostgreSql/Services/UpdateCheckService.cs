@@ -1,4 +1,3 @@
-using System.Collections;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Yarp.EfCore.Configuration.Base;

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -17,6 +18,7 @@ public class RouteMatchEntity:BaseEntity
     public List<string>? Hosts { get; init; }
 
     /// <summary>Only match requests with the given Path pattern.</summary>
+    [StringLength(500)]
     public string? Path { get; init; }
 
     /// <summary>

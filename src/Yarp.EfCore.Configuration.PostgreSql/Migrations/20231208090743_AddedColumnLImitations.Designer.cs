@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Yarp.EfCore.Configuration.PostgreSql;
@@ -12,9 +13,11 @@ using Yarp.EfCore.Configuration.PostgreSql;
 namespace Yarp.EfCore.Configuration.PostgreSql.Migrations
 {
     [DbContext(typeof(PostgreYarpDbContext))]
-    partial class PostgreYarpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231208090743_AddedColumnLImitations")]
+    partial class AddedColumnLImitations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

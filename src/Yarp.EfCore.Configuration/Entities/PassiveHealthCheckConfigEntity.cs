@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -8,6 +9,7 @@ public class PassiveHealthCheckConfigEntity:BaseEntity
     public bool? Enabled { get; init; }
 
     /// <summary>Passive health check policy.</summary>
+    [StringLength(100)]
     public string? Policy { get; init; }
 
     /// <summary>

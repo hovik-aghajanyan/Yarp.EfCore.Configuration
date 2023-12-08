@@ -42,7 +42,7 @@ public static class ConfigEntityExtensions
             SessionAffinity = config.SessionAffinity?.ToEntity(),
             HttpRequest = config.HttpRequest?.ToEntity(),
             HttpClient = config.HttpClient?.ToEntity(),
-            Destinations = config.Destinations.Select(d => new ClusterConfigDestinationEntity()
+            Destinations = config.Destinations?.Select(d => new ClusterConfigDestinationEntity()
             {
                 Name = d.Key,
                 DestinationConfig = new DestinationConfigEntity()

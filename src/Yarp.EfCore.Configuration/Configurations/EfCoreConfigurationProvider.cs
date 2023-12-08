@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Yarp.EfCore.Configuration.Entities;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Configurations;
@@ -24,7 +23,7 @@ public class EfCoreConfigurationProvider<TDbContext>(ILogger<TDbContext> logger,
     /// </summary>
     public async Task Update(string? proxyName = null)
     {
-
+        logger.LogInformation("Updating configuration from {ProxyName}", proxyName ?? "default");
         var routes = proxyName is null
             ? await dbContext.RouteConfigs.Where(r => r.IsEnabled).ToListAsync()
             : await dbContext.ProxyConfigs.Where(p => p.Name.ToLower() == proxyName.ToLower())

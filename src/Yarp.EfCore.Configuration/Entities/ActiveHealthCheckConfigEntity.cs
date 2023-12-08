@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -16,9 +17,11 @@ public class ActiveHealthCheckConfigEntity:BaseEntity
     public TimeSpan? Timeout { get; init; }
 
     /// <summary>Active health check policy.</summary>
+    [StringLength(100)]
     public string? Policy { get; init; }
 
     /// <summary>HTTP health check endpoint path.</summary>
+    [StringLength(500)]
     public string? Path { get; init; }
 
     public ActiveHealthCheckConfig ToConfig()

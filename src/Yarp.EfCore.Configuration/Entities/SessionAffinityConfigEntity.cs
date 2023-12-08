@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -8,11 +9,13 @@ public class SessionAffinityConfigEntity:BaseEntity
     public bool? Enabled { get; init; }
 
     /// <summary>The session affinity policy to use.</summary>
+    [StringLength(100)]
     public string? Policy { get; init; }
 
     /// <summary>
     /// Strategy handling missing destination for an affinitized request.
     /// </summary>
+    [StringLength(100)]
     public string? FailurePolicy { get; init; }
 
     /// <summary>
@@ -24,7 +27,8 @@ public class SessionAffinityConfigEntity:BaseEntity
     /// https://github.com/microsoft/reverse-proxy/issues/976
     /// This field is required.
     /// </summary>
-    public string AffinityKeyName { get; init; }
+    [StringLength(100)]
+    public string AffinityKeyName { get; init; } = null!;
 
     /// <summary>
     /// Configuration of a cookie storing the session affinity key in case

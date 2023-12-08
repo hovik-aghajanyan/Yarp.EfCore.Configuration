@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Yarp.ReverseProxy.Configuration;
 
@@ -6,9 +7,11 @@ namespace Yarp.EfCore.Configuration.Entities;
 public class SessionAffinityCookieConfigEntity:BaseEntity
 {
     /// <summary>The cookie path.</summary>
+    [StringLength(500)]
     public string? Path { get; init; }
 
     /// <summary>The domain to associate the cookie with.</summary>
+    [StringLength(500)]
     public string? Domain { get; init; }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -8,9 +9,11 @@ public class ClusterConfigEntity:BaseEntity
     /// The Id for this cluster. This needs to be globally unique.
     /// This field is required.
     /// </summary>
+    [StringLength(100)]
     public string ClusterId { get; init; } = null!;
 
     /// <summary>Load balancing policy.</summary>
+    [StringLength(100)]
     public string? LoadBalancingPolicy { get; init; }
 
     /// <summary>Session affinity config.</summary>

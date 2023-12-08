@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -8,6 +9,7 @@ public class RouteConfigEntity:BaseEntity
     /// Globally unique identifier of the route.
     /// This field is required.
     /// </summary>
+    [StringLength(100)]
     public string RouteId { get; init; } = null!;
 
     /// <summary>
@@ -25,6 +27,7 @@ public class RouteConfigEntity:BaseEntity
     /// Gets or sets the cluster that requests matching this route
     /// should be proxied to.
     /// </summary>
+    [StringLength(100)]
     public string? ClusterId { get; init; }
 
     /// <summary>
@@ -33,6 +36,7 @@ public class RouteConfigEntity:BaseEntity
     /// Set to "Default" to enable authorization with the applications default policy.
     /// Set to "Anonymous" to disable all authorization checks for this route.
     /// </summary>
+    [StringLength(100)]
     public string? AuthorizationPolicy { get; init; }
 
     /// <summary>
@@ -41,6 +45,7 @@ public class RouteConfigEntity:BaseEntity
     /// Set to "Default" to enable cors with the default policy.
     /// Set to "Disable" to refuses cors requests for this route.
     /// </summary>
+    [StringLength(100)]
     public string? CorsPolicy { get; init; }
 
     /// <summary>
@@ -65,6 +70,7 @@ public class RouteConfigEntity:BaseEntity
     /// Set to "Disable" to disable rate limiting for this route.
     /// Set to "Default" or leave empty to use the global rate limits, if any.
     /// </summary>
+    [StringLength(100)]
     public string? RateLimiterPolicy { get; init; }
 
     /// <summary>
@@ -74,6 +80,7 @@ public class RouteConfigEntity:BaseEntity
     /// Set to "Disable" to disable timeouts for this route.
     /// Set to "Default" or leave empty to use the system defaults, if any.
     /// </summary>
+    [StringLength(100)]
     public string? TimeoutPolicy { get; init; }
 
     /// <summary>

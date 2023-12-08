@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -33,6 +34,7 @@ public class HttpClientConfigEntity:BaseEntity
     /// <summary>
     /// Enables non-ASCII header encoding for outgoing requests.
     /// </summary>
+    [StringLength(20)]
     public string? RequestHeaderEncoding { get; init; }
 
     public HttpClientConfig ToConfig()

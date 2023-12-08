@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Forwarder;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -17,6 +18,7 @@ public class ForwarderRequestConfigEntity:BaseEntity
     /// Preferred version of the outgoing request.
     /// The default is HTTP/2.0.
     /// </summary>
+    [StringLength(20)]
     public string? Version { get; init; }
 
     /// <summary>

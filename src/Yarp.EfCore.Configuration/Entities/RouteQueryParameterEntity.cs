@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -8,7 +9,8 @@ public class RouteQueryParameterEntity:BaseEntity
     /// Name of the query parameter to look for.
     /// This field is case insensitive and required.
     /// </summary>
-    public string Name { get; init; }
+    [StringLength(100)]
+    public string Name { get; init; } = null!;
 
     /// <summary>
     /// A collection of acceptable query parameter values used during routing.

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Yarp.ReverseProxy.Configuration;
 
 namespace Yarp.EfCore.Configuration.Entities;
@@ -8,6 +9,7 @@ public class RouteHeaderEntity:BaseEntity
     /// Name of the header to look for.
     /// This field is case insensitive and required.
     /// </summary>
+    [StringLength(100)]
     public string Name { get; init; } = null!;
 
     /// <summary>

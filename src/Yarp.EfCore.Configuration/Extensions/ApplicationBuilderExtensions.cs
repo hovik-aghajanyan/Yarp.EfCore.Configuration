@@ -54,7 +54,14 @@ public static class ApplicationBuilderExtensions
         }
         if(routes.Any() || clusters.Any())
         {
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
         return app;
     }
